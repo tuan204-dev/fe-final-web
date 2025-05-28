@@ -15,7 +15,7 @@ const getUserDetail = async (userId: string) => {
     return data;
 }
 
-interface RegisterParams {
+export interface RegisterParams {
     loginName: string
     password: string
     firstName: string

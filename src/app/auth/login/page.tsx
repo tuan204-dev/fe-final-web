@@ -8,6 +8,7 @@ import AuthServices from "@/services/authServices";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input } from "antd";
 import { setCookie } from "cookies-next";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -111,6 +112,13 @@ const LoginPage = () => {
         <Button type="primary" htmlType="submit">
           Login
         </Button>
+
+        <Link
+          href={"/auth/register"}
+          className="text-xs text-center text-blue-500 hover:underline"
+        >
+          {"Don't have an account? Register"}
+        </Link>
       </form>
     </div>
   );
