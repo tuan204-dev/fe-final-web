@@ -57,4 +57,8 @@ axiosInstance.interceptors.request.use(async (config) => {
     return config
 })
 
+export const axiosNoAuth = axios.create({
+    baseURL: BASE_URL
+})
+
 export default axiosInstance;

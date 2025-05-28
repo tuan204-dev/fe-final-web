@@ -1,7 +1,6 @@
 import { ApiResponse, PaginationApiResponse } from "@/types/common";
-import axiosInstance, { BASE_URL } from "./axios";
 import { IUser } from "@/types/user";
-import axios from "axios";
+import axiosInstance, { axiosNoAuth } from "./axios";
 
 const getAllUser = async () => {
     const { data } = await axiosInstance.get<PaginationApiResponse<IUser[]>>('/user')
@@ -16,6 +15,7 @@ const getUserDetail = async (userId: string) => {
 }
 
 export interface RegisterParams {
+    token: string
     loginName: string
     password: string
     firstName: string
@@ -26,7 +26,7 @@ export interface RegisterParams {
 }
 
 const register = async (params: RegisterParams) => {
-    const { data } = await axios.post(BASE_URL + '/user/register', params)
+    const { data } = await axiosNoAuth.post('/auth/register', params)
 
     return data;
 }

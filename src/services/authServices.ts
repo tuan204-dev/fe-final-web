@@ -1,5 +1,5 @@
 import { ApiResponse } from "@/types/common";
-import axiosInstance, { BASE_URL } from "./axios";
+import axiosInstance, { axiosNoAuth, BASE_URL } from "./axios";
 import { IUser } from "@/types/user";
 import axios from "axios";
 import { deleteCookie, getCookie } from "cookies-next";
@@ -50,6 +50,14 @@ const logout = async () => {
     deleteCookie(COOKIES_REFRESH_TOKEN);
 }
 
-const AuthServices = { refreshToken, getUserInfo, login, logout }
+const sendRegisterMail = async (email: string) => {
+    const { data, status } = await axiosNoAuth.post(`/auth/send-mail`, { email });
+
+    console.log('status', status);
+
+    return data;
+}
+
+const AuthServices = { refreshToken, getUserInfo, login, logout, sendRegisterMail }
 
 export default AuthServices;

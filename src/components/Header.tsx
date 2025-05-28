@@ -1,6 +1,6 @@
 import { MdOutlineLogout } from "react-icons/md";
 import { useAppSelector } from "@/redux/store";
-import { Checkbox, Dropdown } from "antd";
+import { Button, Checkbox, Dropdown } from "antd";
 import React, { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
@@ -39,6 +39,10 @@ const Header = () => {
       </Link>
 
       <div className="flex items-center gap-x-3">
+        <Link href={"/post/create"}>
+          <Button type="primary">Create Post</Button>
+        </Link>
+
         <Checkbox
           checked={isAdvancedView}
           onChange={(e) => dispatch(setViewAdvanced(e.target.checked))}
