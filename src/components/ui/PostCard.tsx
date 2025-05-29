@@ -1,3 +1,4 @@
+import { useUserComments } from "@/hooks/user";
 import { updateSelectedPost } from "@/redux/slices/postSlice";
 import { useAppSelector } from "@/redux/store";
 import PostServices from "@/services/postServices";
@@ -22,6 +23,9 @@ const PostCard: FC<PostCardProps> = ({ post, refreshPosts, className }) => {
 
   const [comment, setComment] = useState("");
   const [isCommenting, setIsCommenting] = useState(false);
+  const { mutate: refreshOwnComments } = useUserComments(
+    loginUser?._id as string
+  );
 
   const authorName = useMemo(
     () => `${post.author?.firstName} ${post.author?.lastName}`.trim(),
@@ -61,6 +65,7 @@ const PostCard: FC<PostCardProps> = ({ post, refreshPosts, className }) => {
       await PostServices.addComment(post._id, comment);
       setComment("");
       refreshPosts?.();
+      refreshOwnComments();
       toast.success("Comment added successfully");
     } catch (e) {
       console.log("Error adding comment:", e);

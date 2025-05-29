@@ -1,4 +1,5 @@
 import { useComments, usePosts } from "@/hooks/post";
+import { useUserComments } from "@/hooks/user";
 import { useAppSelector } from "@/redux/store";
 import PostServices from "@/services/postServices";
 import { IPost } from "@/types/post";
@@ -27,6 +28,8 @@ const PostDetailModal: FC<PostDetailModalProps> = ({
   const loginUser = useAppSelector((state) => state.auth.user);
   const { mutate: refreshAllPosts } = usePosts();
   const [isLiking, setIsLiking] = useState(false);
+
+  const { mutate: refreshOwnComments } = useUserComments(loginUser?._id as string);
 
   const [comment, setComment] = useState("");
   const [isCommenting, setIsCommenting] = useState(false);
@@ -65,6 +68,7 @@ const PostDetailModal: FC<PostDetailModalProps> = ({
       setComment("");
       refreshAllPosts();
       refreshComments();
+      refreshOwnComments();
       toast.success("Comment added successfully");
     } catch (e) {
       console.log("Error adding comment:", e);

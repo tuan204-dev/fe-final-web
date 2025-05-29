@@ -37,7 +37,6 @@ const getCommentOfPost = async (postId: string) => {
 
 interface AddPostParams {
     title: string
-    content: string
     imageUrl: string
 }
 

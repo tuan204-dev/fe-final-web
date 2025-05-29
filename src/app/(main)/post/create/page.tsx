@@ -1,6 +1,7 @@
 "use client";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { uploadImage } from "@/firebase/func";
+import { usePosts } from "@/hooks/post";
 import PostServices from "@/services/postServices";
 import cn from "@/utils/cn";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,19 +15,18 @@ import { z } from "zod";
 
 const schema = z.object({
   title: z.string().min(1, "Title is required"),
-  content: z.string().min(1, "Content is required"),
   imageUrl: z.string().url("Invalid image URL"),
 });
 
 interface FormValues {
   title: string;
-  content: string;
   imageUrl: string;
 }
 
 const ALLOWED_FILE_TYPES = ["jpg", "jpeg", "png", "gif"];
 
 const CreatePost = () => {
+  const { mutate: refreshPosts } = usePosts();
   const router = useRouter();
   const {
     control,
@@ -64,6 +64,8 @@ const CreatePost = () => {
       const url = await uploadImage(file);
 
       setValue("imageUrl", url);
+
+      toast.success("Upload image successful.");
     } catch (e) {
       console.error("Error uploading image:", e);
       toast.error("Failed to upload image. Please try again.");
@@ -82,6 +84,7 @@ const CreatePost = () => {
       await PostServices.addPost(data);
 
       toast.success("Post successful");
+      refreshPosts();
       router.push("/");
     } catch (e) {
       console.log(e);
@@ -151,28 +154,6 @@ const CreatePost = () => {
             />
 
             <ErrorMessage message={errors.title?.message} />
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-y-1">
-          <label htmlFor="content" className="text-sm text-gray-950">
-            Content <span className="text-red-600">*</span>
-          </label>
-          <div className="flex flex-col">
-            <Controller
-              control={control}
-              name="content"
-              render={({ field }) => (
-                <Input.TextArea
-                  id="content"
-                  {...field}
-                  placeholder="Enter your user name"
-                  className="w-full"
-                  status={errors.content ? "error" : undefined}
-                />
-              )}
-            />
-            <ErrorMessage message={errors.content?.message} />
           </div>
         </div>
 
