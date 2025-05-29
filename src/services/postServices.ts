@@ -35,6 +35,18 @@ const getCommentOfPost = async (postId: string) => {
     return data;
 }
 
-const PostServices = { getAllPosts, likePost, unLikePost, addComment, getCommentOfPost };
+interface AddPostParams {
+    title: string
+    content: string
+    imageUrl: string
+}
+
+const addPost = async (params: AddPostParams) => {
+    const { data } = await axiosInstance.post('/post', params)
+
+    return data
+}
+
+const PostServices = { getAllPosts, likePost, unLikePost, addComment, getCommentOfPost, addPost };
 
 export default PostServices;

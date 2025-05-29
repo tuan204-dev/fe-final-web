@@ -1,6 +1,7 @@
 import { ApiResponse, PaginationApiResponse } from "@/types/common";
 import { IUser } from "@/types/user";
 import axiosInstance, { axiosNoAuth } from "./axios";
+import { IComment } from "@/types/comment";
 
 const getAllUser = async () => {
     const { data } = await axiosInstance.get<PaginationApiResponse<IUser[]>>('/user')
@@ -31,6 +32,20 @@ const register = async (params: RegisterParams) => {
     return data;
 }
 
-const UserServices = { getAllUser, getUserDetail, register }
+const getAllCommentByUserId = async (userId: string) => {
+    if (!userId) {
+        return {
+            data: {
+                data: []
+            }
+        }
+    }
+
+    const { data } = await axiosInstance.get<PaginationApiResponse<IComment[]>>(`/user/${userId}/comment`)
+
+    return data
+}
+
+const UserServices = { getAllUser, getUserDetail, register, getAllCommentByUserId }
 
 export default UserServices;

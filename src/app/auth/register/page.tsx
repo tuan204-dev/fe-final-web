@@ -55,10 +55,14 @@ const RegisterPage = () => {
   if (isSended) {
     return (
       <div className="flex flex-col items-center justify-center gap-y-3 min-h-screen">
-        <h1 className="text-2xl">Registration Email Sent</h1>
+        <h1 className="text-2xl font-medium">Registration Email Sent</h1>
         <p className="text-gray-500">
           Please check your email to complete the registration process.
         </p>
+
+        <Link href={"/auth/login"} className="text-blue-500 hover:underline text-sm">
+          Go to Login
+        </Link>
       </div>
     );
   }

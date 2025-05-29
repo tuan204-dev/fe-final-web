@@ -16,6 +16,7 @@
     "axios": "^1.9.0",
     "cookies-next": "^5.1.0",
     "date-fns": "^4.1.0",
+    "firebase": "^11.8.1",
     "jwt-decode": "^4.0.0",
     "lodash": "^4.17.21",
     "next": "15.3.2",
