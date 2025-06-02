@@ -46,6 +46,10 @@ const addPost = async (params: AddPostParams) => {
     return data
 }
 
-const PostServices = { getAllPosts, likePost, unLikePost, addComment, getCommentOfPost, addPost };
+const deletePost = async (postId: string) => {
+    await axiosInstance.delete(`/post/${postId}`)
+}
+
+const PostServices = { getAllPosts, likePost, unLikePost, addComment, getCommentOfPost, addPost, deletePost };
 
 export default PostServices;

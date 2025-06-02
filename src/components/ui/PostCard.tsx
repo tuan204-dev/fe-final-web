@@ -5,9 +5,12 @@ import PostServices from "@/services/postServices";
 import { IPost } from "@/types/post";
 import cn from "@/utils/cn";
 import { formatTime } from "@/utils/time";
+import useModal from "antd/es/modal/useModal";
+import Image from "next/image";
 import { FC, KeyboardEvent, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { FaHeart, FaRegComment, FaRegHeart } from "react-icons/fa";
+import { MdClear } from "react-icons/md";
 import { useDispatch } from "react-redux";
 
 interface PostCardProps {
@@ -26,6 +29,8 @@ const PostCard: FC<PostCardProps> = ({ post, refreshPosts, className }) => {
   const { mutate: refreshOwnComments } = useUserComments(
     loginUser?._id as string
   );
+
+  const [confirmDelete, contextConfirmDelete] = useModal();
 
   const authorName = useMemo(
     () => `${post.author?.firstName} ${post.author?.lastName}`.trim(),
@@ -82,6 +87,29 @@ const PostCard: FC<PostCardProps> = ({ post, refreshPosts, className }) => {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      await PostServices.deletePost(post._id);
+      toast.success("Delete post successfully");
+      refreshPosts?.();
+    } catch (e) {
+      console.log("Error deleting post:", e);
+      toast.error("Failed to delete post. Please try again.");
+    }
+  };
+
+  const handleClickDelete = () => {
+    confirmDelete.confirm({
+      title: "Delete Post",
+      content:
+        "Are you sure you want to delete this post? This action cannot be undone.",
+      okText: "Delete",
+      okType: "danger",
+      cancelText: "Cancel",
+      onOk: handleDelete,
+    });
+  };
+
   return (
     <div
       className={cn(
@@ -89,14 +117,28 @@ const PostCard: FC<PostCardProps> = ({ post, refreshPosts, className }) => {
         className
       )}
     >
-      <div className="p-4 flex items-center">
-        <div className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-400 to-blue-500 flex items-center justify-center text-white font-semibold">
-          JD
+      {contextConfirmDelete}
+      <div className="p-4 flex items-center justify-between">
+        <div className="flex items-center">
+          <div className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-400 to-blue-500 flex items-center justify-center text-white font-semibold">
+            JD
+          </div>
+          <div className="ml-3">
+            <p className="text-sm font-medium text-gray-900">{authorName}</p>
+            <p className="text-xs text-gray-500">
+              {formatTime(post.createdAt)}
+            </p>
+          </div>
         </div>
-        <div className="ml-3">
-          <p className="text-sm font-medium text-gray-900">{authorName}</p>
-          <p className="text-xs text-gray-500">{formatTime(post.createdAt)}</p>
-        </div>
+
+        {loginUser?._id === post?.author?._id && (
+          <button
+            onClick={handleClickDelete}
+            className="text-gray-500 hover:text-gray-700 transition text-xl cursor-pointer"
+          >
+            <MdClear />
+          </button>
+        )}
       </div>
 
       <div className="px-4 pb-3">
@@ -104,12 +146,13 @@ const PostCard: FC<PostCardProps> = ({ post, refreshPosts, className }) => {
       </div>
 
       <div className="w-full h-80">
-        <div
-          className="h-full w-full bg-no-repeat bg-center bg-cover"
-          style={{
-            backgroundImage: `url(${post.imageUrl})`,
-          }}
-        ></div>
+        <Image
+          src={post.imageUrl}
+          alt={post.title}
+          width={700}
+          height={500}
+          className="w-full h-full object-cover"
+        />
       </div>
 
       <div className="p-4 flex items-center justify-between border-t border-gray-100">

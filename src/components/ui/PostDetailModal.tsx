@@ -1,13 +1,16 @@
 import { useComments, usePosts } from "@/hooks/post";
 import { useUserComments } from "@/hooks/user";
+import { updateSelectedPost } from "@/redux/slices/postSlice";
 import { useAppSelector } from "@/redux/store";
 import PostServices from "@/services/postServices";
 import { IPost } from "@/types/post";
 import { formatTime } from "@/utils/time";
 import { Modal, Spin } from "antd";
+import Image from "next/image";
 import { FC, KeyboardEvent, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { FaHeart, FaRegComment, FaRegHeart } from "react-icons/fa";
+import { useDispatch } from "react-redux";
 
 interface PostDetailModalProps {
   post: IPost | null;
@@ -25,6 +28,7 @@ const PostDetailModal: FC<PostDetailModalProps> = ({
     mutate: refreshComments,
     isLoading: isCommentLoading,
   } = useComments(post?._id ?? "");
+  const dispatch = useDispatch()
   const loginUser = useAppSelector((state) => state.auth.user);
   const { mutate: refreshAllPosts } = usePosts();
   const [isLiking, setIsLiking] = useState(false);
@@ -47,8 +51,12 @@ const PostDetailModal: FC<PostDetailModalProps> = ({
 
       if (isLiked) {
         await PostServices.unLikePost(post._id);
+        const newSelectedPost = {...post, likes: post.likes?.filter(id => id !== loginUser?._id) };
+        dispatch(updateSelectedPost(newSelectedPost));
       } else {
         await PostServices.likePost(post._id);
+        const newSelectedPost = {...post, likes: [...(post.likes || []), String(loginUser?._id)] };
+        dispatch(updateSelectedPost(newSelectedPost));
       }
       refreshAllPosts();
     } finally {
@@ -138,12 +146,13 @@ const PostDetailModal: FC<PostDetailModalProps> = ({
       </div>
 
       <div className="w-full h-80">
-        <div
-          className="h-full w-full bg-no-repeat bg-center bg-cover"
-          style={{
-            backgroundImage: `url(${post?.imageUrl})`,
-          }}
-        ></div>
+        <Image
+            src={post.imageUrl}
+            alt={post.title}
+            width={700}
+            height={500}
+            className="w-full h-full object-cover"
+        />
       </div>
 
       <div className="pt-4 px-2 flex items-center justify-between border-t border-gray-200 pb-3 border-b">
@@ -165,10 +174,6 @@ const PostDetailModal: FC<PostDetailModalProps> = ({
             <span className="text-sm">{comments?.length ?? 0}</span>
           </button>
         </div>
-
-        {/* <button className="text-sm text-gray-500 hover:text-gray-700">
-          <FaRegBookmark />
-        </button> */}
       </div>
 
       {isCommentLoading ? (

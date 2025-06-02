@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input } from "antd";
 import { isUndefined, omit, omitBy } from "lodash";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
@@ -73,6 +74,13 @@ const RegisterPage = () => {
   });
 
   const token = searchParams.get("token");
+
+  useEffect(() => {
+    if (!token) {
+      toast.error("Invalid registration token. Please try again.");
+      router.push("/auth/login");
+    }
+  }, [token]);
 
   const onSubmit = async (data: FormValues) => {
     let toastId;
