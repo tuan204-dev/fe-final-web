@@ -1,3 +1,4 @@
+import { usePostOfUser } from "@/hooks/post";
 import { useUserComments } from "@/hooks/user";
 import { updateSelectedPost } from "@/redux/slices/postSlice";
 import { useAppSelector } from "@/redux/store";
@@ -23,6 +24,9 @@ const PostCard: FC<PostCardProps> = ({ post, refreshPosts, className }) => {
   const dispatch = useDispatch();
   const loginUser = useAppSelector((state) => state.auth.user);
   const [isLiking, setIsLiking] = useState(false);
+  const { mutate: refreshLoginUserPosts } = usePostOfUser(
+      loginUser?._id as string
+    );
 
   const [comment, setComment] = useState("");
   const [isCommenting, setIsCommenting] = useState(false);
@@ -107,6 +111,7 @@ const PostCard: FC<PostCardProps> = ({ post, refreshPosts, className }) => {
       await PostServices.deletePost(post._id);
       toast.success("Delete post successfully");
       refreshPosts?.();
+      refreshLoginUserPosts();
     } catch (e) {
       console.log("Error deleting post:", e);
       toast.error("Failed to delete post. Please try again.");
