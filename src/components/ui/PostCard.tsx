@@ -164,7 +164,7 @@ const PostCard: FC<PostCardProps> = ({ post, refreshPosts, className }) => {
         <p className="text-gray-800">{post.title}</p>
       </div>
 
-      <div className="w-full h-80">
+      <div onClick={() => dispatch(updateSelectedPost(post))} className="w-full h-80">
         <Image
           src={post.imageUrl}
           alt={post.title}
