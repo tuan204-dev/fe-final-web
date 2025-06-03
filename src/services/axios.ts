@@ -1,4 +1,4 @@
-import { COOKIES_ACCESS_TOKEN, COOKIES_REFRESH_TOKEN } from "@/constants/cookies";
+import { COOKIES_ACCESS_TOKEN, COOKIES_OPTIONS, COOKIES_REFRESH_TOKEN } from "@/constants/cookies";
 import axios from "axios";
 import { getCookie, setCookie } from "cookies-next";
 import { jwtDecode } from "jwt-decode";
@@ -29,8 +29,8 @@ const getAccessToken = async () => {
 
             const { data: newTokens } = await AuthServices.refreshToken(refreshToken)
 
-            setCookie(COOKIES_ACCESS_TOKEN, newTokens.accessToken)
-            setCookie(COOKIES_REFRESH_TOKEN, newTokens.refreshToken)
+            setCookie(COOKIES_ACCESS_TOKEN, newTokens.accessToken, COOKIES_OPTIONS)
+            setCookie(COOKIES_REFRESH_TOKEN, newTokens.refreshToken, COOKIES_OPTIONS)
 
             return newTokens.accessToken
         }

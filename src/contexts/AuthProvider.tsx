@@ -1,6 +1,7 @@
 "use client";
 import {
   COOKIES_ACCESS_TOKEN,
+  COOKIES_OPTIONS,
   COOKIES_REFRESH_TOKEN,
 } from "@/constants/cookies";
 import { updateUser } from "@/redux/slices/authSlice";
@@ -32,8 +33,12 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
           return;
         }
 
-        setCookie(COOKIES_ACCESS_TOKEN, newTokens.accessToken);
-        setCookie(COOKIES_REFRESH_TOKEN, newTokens.refreshToken);
+        setCookie(COOKIES_ACCESS_TOKEN, newTokens.accessToken, COOKIES_OPTIONS);
+        setCookie(
+          COOKIES_REFRESH_TOKEN,
+          newTokens.refreshToken,
+          COOKIES_OPTIONS
+        );
 
         const { data: userInfo } = await AuthServices.getUserInfo();
 

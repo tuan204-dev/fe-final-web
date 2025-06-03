@@ -1,6 +1,7 @@
 "use client";
 import {
   COOKIES_ACCESS_TOKEN,
+  COOKIES_OPTIONS,
   COOKIES_REFRESH_TOKEN,
 } from "@/constants/cookies";
 import { updateUser } from "@/redux/slices/authSlice";
@@ -55,8 +56,8 @@ const LoginPage = () => {
 
       dispatch(updateUser(user));
 
-      setCookie(COOKIES_ACCESS_TOKEN, accessToken);
-      setCookie(COOKIES_REFRESH_TOKEN, refreshToken);
+      setCookie(COOKIES_ACCESS_TOKEN, accessToken, COOKIES_OPTIONS);
+      setCookie(COOKIES_REFRESH_TOKEN, refreshToken, COOKIES_OPTIONS);
 
       toast.success("Login successful!");
       router.push("/");
@@ -73,7 +74,11 @@ const LoginPage = () => {
         <span>admin</span>
         <span>12345678</span>
 
-        <a href="https://ltw-final-fe.netlify.app/" target="_blank" className="text-blue-500 underline">
+        <a
+          href="https://ltw-final-fe.netlify.app/"
+          target="_blank"
+          className="text-blue-500 underline"
+        >
           Production web
         </a>
       </div>
