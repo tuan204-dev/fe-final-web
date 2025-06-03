@@ -7,7 +7,7 @@ import cn from "@/utils/cn";
 import { formatTime } from "@/utils/time";
 import useModal from "antd/es/modal/useModal";
 import Image from "next/image";
-import { FC, KeyboardEvent, useMemo, useState } from "react";
+import { FC, KeyboardEvent, useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { FaHeart, FaRegComment, FaRegHeart } from "react-icons/fa";
 import { MdClear } from "react-icons/md";
@@ -37,10 +37,16 @@ const PostCard: FC<PostCardProps> = ({ post, refreshPosts, className }) => {
     [post.author]
   );
 
+  const [likedUserIdList, setLikedUserIdList] = useState<string[]>([]);
+
   const isLiked = useMemo(
-    () => post.likes?.includes(loginUser?._id as string),
-    [loginUser?._id, post.likes]
+    () => likedUserIdList?.includes(loginUser?._id as string),
+    [loginUser?._id, likedUserIdList]
   );
+
+  useEffect(() => {
+    setLikedUserIdList(post.likes || []);
+  }, [JSON.stringify(post.likes)]);
 
   const handleToggleLike = async () => {
     if (isLiking) return;
@@ -49,8 +55,17 @@ const PostCard: FC<PostCardProps> = ({ post, refreshPosts, className }) => {
       setIsLiking(true);
 
       if (isLiked) {
+        const newLikedUserIdList = likedUserIdList.filter(
+          (userId) => userId !== loginUser?._id
+        );
+        setLikedUserIdList(newLikedUserIdList);
         await PostServices.unLikePost(post._id);
       } else {
+        const newLikedUserIdList = [
+          ...likedUserIdList,
+          loginUser?._id as string,
+        ];
+        setLikedUserIdList(newLikedUserIdList);
         await PostServices.likePost(post._id);
       }
       refreshPosts?.();
@@ -170,7 +185,7 @@ const PostCard: FC<PostCardProps> = ({ post, refreshPosts, className }) => {
             ) : (
               <FaRegHeart className="text-gray-500 hover:text-red-500 transition" />
             )}
-            <span className="text-sm">{post.likes?.length ?? 0}</span>
+            <span className="text-sm">{likedUserIdList?.length ?? 0}</span>
           </button>
 
           <button

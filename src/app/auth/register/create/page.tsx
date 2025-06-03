@@ -5,11 +5,11 @@ import { ALLOWED_FILE_TYPES, ErrorMessages } from "@/constants/common";
 import { uploadImage } from "@/firebase/func";
 import UserServices, { RegisterParams } from "@/services/userServices";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Avatar, Button, Input } from "antd";
+import { Button, Input } from "antd";
 import { isUndefined, omit, omitBy } from "lodash";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { FiPlus } from "react-icons/fi";
@@ -21,7 +21,7 @@ const schema = z
       .string()
       .min(1, "Login name is required")
       .min(5, "Login name must be at least 5 characters")
-      .max(100, "Login name must be at most 100 characters"),
+      .max(15, "Login name must be at most 15 characters"),
     password: z
       .string()
       .min(8, "Password must be at least 8 characters")

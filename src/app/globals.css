@@ -31,3 +31,16 @@
   -webkit-transition: all 3s ease !important;
   background-color: #7b7b7b !important; /* new color on hover */
 }
+
+.ant-carousel .slick-arrow {
+  width: 30px !important;
+  height: 30px !important;
+  color: #000000 !important;
+}
+
+.ant-carousel .slick-next {
+  inset-inline-end: -40px !important;
+}
+.ant-carousel .slick-prev {
+  inset-inline-start: -40px !important;
+}

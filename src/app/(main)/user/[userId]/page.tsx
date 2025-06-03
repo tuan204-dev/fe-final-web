@@ -94,7 +94,7 @@ const UserPage = () => {
           ))}
         </div>
       ) : (
-        <div className="w-screen max-w-2xl mx-auto">
+        <div className="w-full max-w-[752px] mx-auto py-7 px-10">
           <Carousel
             arrows={true}
             draggable={true}

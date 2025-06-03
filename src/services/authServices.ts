@@ -51,9 +51,7 @@ const logout = async () => {
 }
 
 const sendRegisterMail = async (email: string) => {
-    const { data, status } = await axiosNoAuth.post(`/auth/send-mail`, { email });
-
-    console.log('status', status);
+    const { data } = await axiosNoAuth.post(`/auth/send-mail`, { email });
 
     return data;
 }

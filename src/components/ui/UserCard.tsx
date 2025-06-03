@@ -45,12 +45,12 @@ const UserCard: FC<UserCardProps> = ({ user }) => {
         <p className="text-xs text-gray-500">@{user.loginName}</p>
       </div>
       <div className="flex items-center gap-x-1">
-        <span className="size-4 rounded-full bg-green-700 text-white text-xs flex items-center justify-center">
+        <span className="size-4 rounded-full bg-green-500 text-white text-xs flex items-center justify-center">
           {posts?.length ?? 0}
         </span>
         <button
           onClick={handleClickComments}
-          className="size-4 rounded-full bg-red-700 text-white text-xs flex items-center justify-center cursor-pointer"
+          className="size-4 rounded-full bg-red-500 text-white text-xs flex items-center justify-center cursor-pointer"
         >
           {comment?.length ?? 0}
         </button>

@@ -1,4 +1,4 @@
-import { PaginationApiResponse } from "@/types/common";
+import { ApiResponse, PaginationApiResponse } from "@/types/common";
 import axiosInstance from "./axios";
 import { IPost } from "@/types/post";
 import { IComment } from "@/types/comment";
@@ -18,11 +18,11 @@ const getAllPosts = async (params: IGetAllPostParams = {}) => {
 }
 
 const likePost = async (postId: string) => {
-    await axiosInstance.post(`/post/${postId}/like`)
+    await axiosInstance.post<ApiResponse<IPost>>(`/post/${postId}/like`)
 }
 
 const unLikePost = async (postId: string) => {
-    await axiosInstance.delete(`/post/${postId}/like`)
+    await axiosInstance.delete<ApiResponse<IPost>>(`/post/${postId}/like`)
 }
 
 const addComment = async (postId: string, content: string) => {

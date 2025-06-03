@@ -11,6 +11,7 @@ import { FC, KeyboardEvent, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { FaHeart, FaRegComment, FaRegHeart } from "react-icons/fa";
 import { useDispatch } from "react-redux";
+import { Image as AntdImage } from "antd";
 
 interface PostDetailModalProps {
   post: IPost | null;
@@ -36,8 +37,6 @@ const PostDetailModal: FC<PostDetailModalProps> = ({
   const { mutate: refreshOwnComments } = useUserComments(
     loginUser?._id as string
   );
-
-  console.log("post", post);
 
   const [comment, setComment] = useState("");
   const [isCommenting, setIsCommenting] = useState(false);
@@ -159,14 +158,16 @@ const PostDetailModal: FC<PostDetailModalProps> = ({
         <p className="text-gray-800">{post?.title}</p>
       </div>
 
-      <div className="w-full h-80">
-        <Image
-          src={post.imageUrl}
-          alt={post.title}
-          width={700}
-          height={500}
-          className="w-full h-full object-cover"
-        />
+      <div className="w-full h-80 aspect-video relative">
+        <div className="absolute top-0 left-0 right-0 bottom-0 overflow-hidden">
+          <AntdImage
+            src={post.imageUrl}
+            alt={post.title}
+            className="w-full h-full object-cover"
+            width={472}
+            height={320}
+          />
+        </div>
       </div>
 
       <div className="pt-4 px-2 flex items-center justify-between border-t border-gray-200 pb-3 border-b">
