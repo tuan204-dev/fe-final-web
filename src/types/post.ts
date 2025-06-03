@@ -6,6 +6,7 @@ export interface IPost {
     title: string
     imageUrl: string
     author?: IUser
+    userId?: string
     likes?: string[]
     commentCount: number
     createdAt: string

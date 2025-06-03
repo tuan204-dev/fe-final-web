@@ -1,6 +1,7 @@
 "use client";
 import { useUserComments, useUserDetail } from "@/hooks/user";
 import { setViewAdvanced } from "@/redux/slices/viewSlice";
+import { IComment } from "@/types/comment";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
@@ -12,9 +13,9 @@ const UserComments = () => {
   const { user } = useUserDetail(userId);
   const dispatch = useDispatch();
 
-  const handleClickComment = (pid: string) => {
+  const handleClickComment = (comment: IComment) => {
     dispatch(setViewAdvanced(true));
-    router.push(`/user/${userId}?pid=${pid}`);
+    router.push(`/user/${comment?.post?.userId}?pid=${comment?.post?._id}`);
   };
 
   return (
@@ -25,7 +26,7 @@ const UserComments = () => {
       <div className="flex flex-col gap-y-3 p-5">
         {comment?.map((comment) => (
           <div
-            onClick={() => handleClickComment(comment.post._id)}
+            onClick={() => handleClickComment(comment)}
             key={comment._id}
             className="grid grid-cols-[50px_1fr] gap-4 items-center bg-gray-50 rounded-md p-3 hover:shadow transition cursor-pointer"
           >
