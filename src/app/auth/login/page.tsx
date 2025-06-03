@@ -32,6 +32,10 @@ const LoginPage = () => {
     handleSubmit,
   } = useForm<LoginFormData>({
     resolver: zodResolver(schema),
+    // defaultValues: {
+    //   loginName: "admin",
+    //   password: "12345678",
+    // },
   });
 
   const onSubmit = async (data: LoginFormData) => {
@@ -63,7 +67,12 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-y-3 min-h-screen">
+    <div className="flex flex-col items-center justify-center gap-y-3 min-h-screen relative">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 flex flex-col gap-y-1">
+        <span>Tài khoản để test:</span>
+        <span>admin</span>
+        <span>12345678</span>
+      </div>
       <h1 className="text-2xl">Photo App</h1>
 
       <p className="text-gray-500">Login to your account</p>
