@@ -3,3 +3,5 @@ export enum ErrorMessages {
     EMAIL_ALREADY_EXISTS = 'Email already exists',
     LOGIN_NAME_ALREADY_EXISTS = 'Login name already exists'
 }
+
+export const ALLOWED_FILE_TYPES = ["jpg", "jpeg", "png", "gif"];

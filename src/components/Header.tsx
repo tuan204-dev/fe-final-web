@@ -8,6 +8,7 @@ import AuthServices from "@/services/authServices";
 import { useDispatch } from "react-redux";
 import { setViewAdvanced } from "@/redux/slices/viewSlice";
 import Link from "next/link";
+import Image from "next/image";
 
 const Header = () => {
   const router = useRouter();
@@ -62,18 +63,23 @@ const Header = () => {
             ],
           }}
         >
-          <div className="flex items-center space-x-3 cursor-pointer">
-            {/* <img
-                src="https://randomuser.me/api/portraits/men/42.jpg"
-                alt="Profile"
-                className="w-10 h-10 rounded-full object-cover"
-              /> */}
+          <Link
+            href={`/user/${currentUser?._id}`}
+            className="flex items-center space-x-3 cursor-pointer"
+          >
+            <Image
+              width={40}
+              height={40}
+              src={currentUser?.avatar || "/imgs/default-avt.jpg"}
+              alt="Profile"
+              className="w-10 h-10 rounded-full object-cover"
+            />
             <div>
               <p className="text-sm font-medium text-gray-800">{fullName}</p>
               <p className="text-xs text-gray-500">@{currentUser?.loginName}</p>
             </div>
             <i className="fas fa-chevron-down text-gray-500 text-sm"></i>
-          </div>
+          </Link>
         </Dropdown>
       </div>
     </header>

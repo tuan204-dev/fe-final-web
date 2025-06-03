@@ -1,6 +1,7 @@
 import { usePostOfUser } from "@/hooks/post";
 import { useUserComments } from "@/hooks/user";
 import { IUser } from "@/types/user";
+import { Image } from "antd";
 import { useRouter } from "next/navigation";
 import { FC } from "react";
 
@@ -30,10 +31,14 @@ const UserCard: FC<UserCardProps> = ({ user }) => {
       className="user-item flex items-center p-2 rounded-lg hover:bg-gray-200 cursor-pointer transition bg-gray-50"
     >
       <div className="relative">
-        <div className="user-avatar w-10 h-10 rounded-full bg-gradient-to-r from-purple-400 to-blue-500 flex items-center justify-center text-white font-semibold transition duration-300">
-          <span>JD</span>
-        </div>
-        <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></span>
+        <Image
+          src={user?.avatar ?? "/imgs/default-avt.jpg"}
+          fallback="/imgs/default-avt.jpg"
+          alt={`${user?.firstName} ${user?.lastName}`}
+          className="rounded-full !size-10 object-cover"
+          preview={false}
+        />
+        {/* <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></span> */}
       </div>
       <div className="ml-3 flex-1">
         <p className="text-sm font-medium text-gray-900">{userFullName}</p>

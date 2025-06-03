@@ -28,12 +28,16 @@ const PostDetailModal: FC<PostDetailModalProps> = ({
     mutate: refreshComments,
     isLoading: isCommentLoading,
   } = useComments(post?._id ?? "");
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const loginUser = useAppSelector((state) => state.auth.user);
   const { mutate: refreshAllPosts } = usePosts();
   const [isLiking, setIsLiking] = useState(false);
 
-  const { mutate: refreshOwnComments } = useUserComments(loginUser?._id as string);
+  const { mutate: refreshOwnComments } = useUserComments(
+    loginUser?._id as string
+  );
+
+  console.log("post", post);
 
   const [comment, setComment] = useState("");
   const [isCommenting, setIsCommenting] = useState(false);
@@ -51,11 +55,17 @@ const PostDetailModal: FC<PostDetailModalProps> = ({
 
       if (isLiked) {
         await PostServices.unLikePost(post._id);
-        const newSelectedPost = {...post, likes: post.likes?.filter(id => id !== loginUser?._id) };
+        const newSelectedPost = {
+          ...post,
+          likes: post.likes?.filter((id) => id !== loginUser?._id),
+        };
         dispatch(updateSelectedPost(newSelectedPost));
       } else {
         await PostServices.likePost(post._id);
-        const newSelectedPost = {...post, likes: [...(post.likes || []), String(loginUser?._id)] };
+        const newSelectedPost = {
+          ...post,
+          likes: [...(post.likes || []), String(loginUser?._id)],
+        };
         dispatch(updateSelectedPost(newSelectedPost));
       }
       refreshAllPosts();
@@ -132,9 +142,13 @@ const PostDetailModal: FC<PostDetailModalProps> = ({
       }
     >
       <div className="p-4 px-0 flex items-center">
-        <div className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-400 to-blue-500 flex items-center justify-center text-white font-semibold">
-          JD
-        </div>
+        <Image
+          src={post?.author?.avatar || "/imgs/default-avt.jpg"}
+          alt={authorName}
+          width={40}
+          height={40}
+          className="rounded-full object-cover size-10"
+        />
         <div className="ml-3">
           <p className="text-sm font-medium text-gray-900">{authorName}</p>
           <p className="text-xs text-gray-500">{formatTime(post?.createdAt)}</p>
@@ -147,11 +161,11 @@ const PostDetailModal: FC<PostDetailModalProps> = ({
 
       <div className="w-full h-80">
         <Image
-            src={post.imageUrl}
-            alt={post.title}
-            width={700}
-            height={500}
-            className="w-full h-full object-cover"
+          src={post.imageUrl}
+          alt={post.title}
+          width={700}
+          height={500}
+          className="w-full h-full object-cover"
         />
       </div>
 
@@ -187,9 +201,13 @@ const PostDetailModal: FC<PostDetailModalProps> = ({
               key={comment._id}
               className="grid grid-cols-[32px_1fr] gap-x-3 w-fit"
             >
-              <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-400 to-blue-500 flex items-center justify-center text-white font-semibold">
-                JD
-              </div>
+              <Image
+                src={comment?.user?.avatar || "/imgs/default-avt.jpg"}
+                alt={authorName}
+                width={32}
+                height={32}
+                className="rounded-full object-cover size-8"
+              />
 
               <div className="flex flex-col">
                 <div className="flex flex-col gap-y-1 p-2 pt-1 rounded-2xl bg-gray-200">

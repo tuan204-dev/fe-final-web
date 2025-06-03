@@ -1,6 +1,7 @@
 export interface IUser {
     _id: string
     loginName: string
+    avatar?: string
     firstName: string
     lastName: string
     location?: string

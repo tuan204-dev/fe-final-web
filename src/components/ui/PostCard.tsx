@@ -120,9 +120,13 @@ const PostCard: FC<PostCardProps> = ({ post, refreshPosts, className }) => {
       {contextConfirmDelete}
       <div className="p-4 flex items-center justify-between">
         <div className="flex items-center">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-400 to-blue-500 flex items-center justify-center text-white font-semibold">
-            JD
-          </div>
+          <Image
+            src={post?.author?.avatar || "/imgs/default-avt.jpg"}
+            alt={authorName}
+            width={40}
+            height={40}
+            className="rounded-full object-cover size-10"
+          />
           <div className="ml-3">
             <p className="text-sm font-medium text-gray-900">{authorName}</p>
             <p className="text-xs text-gray-500">

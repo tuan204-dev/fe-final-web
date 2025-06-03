@@ -1,6 +1,7 @@
 "use client";
 import { useUserComments, useUserDetail } from "@/hooks/user";
 import { setViewAdvanced } from "@/redux/slices/viewSlice";
+import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 
@@ -28,10 +29,12 @@ const UserComments = () => {
             key={comment._id}
             className="grid grid-cols-[50px_1fr] gap-4 items-center bg-gray-50 rounded-md p-3 hover:shadow transition cursor-pointer"
           >
-            <img
+            <Image
               src={comment.post?.imageUrl}
               className="size-[50px] object-cover rounded-md border"
               alt={comment.post?.title || "Post image"}
+              width={50}
+              height={50}
             />
 
             <div className="flex flex-col">

@@ -1,5 +1,6 @@
 "use client";
 import ErrorMessage from "@/components/ui/ErrorMessage";
+import { ALLOWED_FILE_TYPES } from "@/constants/common";
 import { uploadImage } from "@/firebase/func";
 import { usePosts } from "@/hooks/post";
 import PostServices from "@/services/postServices";
@@ -23,7 +24,7 @@ interface FormValues {
   imageUrl: string;
 }
 
-const ALLOWED_FILE_TYPES = ["jpg", "jpeg", "png", "gif"];
+
 
 const CreatePost = () => {
   const { mutate: refreshPosts } = usePosts();
@@ -34,6 +35,7 @@ const CreatePost = () => {
     formState: { errors, isSubmitting },
     setValue,
     watch,
+    trigger
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
   });
@@ -64,7 +66,7 @@ const CreatePost = () => {
       const url = await uploadImage(file);
 
       setValue("imageUrl", url);
-
+      trigger("imageUrl");
       toast.success("Upload image successful.");
     } catch (e) {
       console.error("Error uploading image:", e);

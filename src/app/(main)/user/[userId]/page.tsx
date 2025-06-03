@@ -5,7 +5,7 @@ import { usePostOfUser } from "@/hooks/post";
 import { useAppSelector } from "@/redux/store";
 import UserServices from "@/services/userServices";
 import { IUser } from "@/types/user";
-import { Carousel } from "antd";
+import { Carousel, Image } from "antd";
 import { useParams, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
@@ -49,9 +49,13 @@ const UserPage = () => {
   return (
     <div className="">
       <div className="flex flex-col items-center py-7">
-        <div className="size-20 rounded-full bg-gradient-to-r from-purple-400 to-blue-500 flex items-center justify-center text-white font-semibold">
-          JD
-        </div>
+        <Image
+          src={user?.avatar ?? "/imgs/default-avt.jpg"}
+          fallback="/imgs/default-avt.jpg"
+          alt={`${user?.firstName} ${user?.lastName}`}
+          className="rounded-full !size-20 object-cover mb-3"
+          preview={false}
+        />
 
         <span className="text-xs text-gray-600 mt-2">@{user?.loginName}</span>
         <h1 className="text-lg font-medium text-gray-900 my-3">{`${user?.firstName} ${user?.lastName}`}</h1>
