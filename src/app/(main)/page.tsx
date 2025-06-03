@@ -16,11 +16,19 @@ const HomePage = () => {
   }
 
   if (isAdvancedView) {
+    if (posts?.length === 1) {
+      return (
+        <div className="flex flex-col mx-auto max-w-2xl gap-y-6 py-6">
+          <PostCard post={posts[0]} refreshPosts={refreshPosts} />
+        </div>
+      );
+    }
+
     return (
       <div className="w-full max-w-[752px] mx-auto py-7 px-10">
         <Carousel
           arrows={true}
-          draggable={true}
+          draggable={posts?.length > 1}
           prevArrow={<FaCaretLeft />}
           nextArrow={<FaCaretRight />}
           infinite

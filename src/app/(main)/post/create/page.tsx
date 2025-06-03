@@ -2,7 +2,8 @@
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { ALLOWED_FILE_TYPES } from "@/constants/common";
 import { uploadImage } from "@/firebase/func";
-import { usePosts } from "@/hooks/post";
+import { usePostOfUser, usePosts } from "@/hooks/post";
+import { useAppSelector } from "@/redux/store";
 import PostServices from "@/services/postServices";
 import cn from "@/utils/cn";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,10 +25,12 @@ interface FormValues {
   imageUrl: string;
 }
 
-
-
 const CreatePost = () => {
+  const loginUser = useAppSelector((state) => state.auth.user);
   const { mutate: refreshPosts } = usePosts();
+  const { mutate: refreshLoginUserPosts } = usePostOfUser(
+    loginUser?._id as string
+  );
   const router = useRouter();
   const {
     control,
@@ -35,7 +38,7 @@ const CreatePost = () => {
     formState: { errors, isSubmitting },
     setValue,
     watch,
-    trigger
+    trigger,
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
   });
@@ -87,6 +90,7 @@ const CreatePost = () => {
 
       toast.success("Post successful");
       refreshPosts();
+      refreshLoginUserPosts();
       router.push("/");
     } catch (e) {
       console.log(e);

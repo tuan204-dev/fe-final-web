@@ -93,11 +93,15 @@ const UserPage = () => {
             <PostCard key={post._id} post={post} refreshPosts={refreshPosts} />
           ))}
         </div>
+      ) : posts?.length === 1 ? (
+        <div className="w-full max-w-2xl mx-auto py-7 px-10">
+          <PostCard post={posts?.[0]} refreshPosts={refreshPosts} />
+        </div>
       ) : (
         <div className="w-full max-w-[752px] mx-auto py-7 px-10">
           <Carousel
             arrows={true}
-            draggable={true}
+            draggable={posts?.length > 1}
             prevArrow={<FaCaretLeft size={80} />}
             nextArrow={<FaCaretRight size={80} />}
             infinite
