@@ -1,11 +1,11 @@
 "use client";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { ALLOWED_FILE_TYPES } from "@/constants/common";
-import { uploadImage } from "@/firebase/func";
 import { usePostOfUser, usePosts } from "@/hooks/post";
 import { useAppSelector } from "@/redux/store";
 import PostServices from "@/services/postServices";
 import cn from "@/utils/cn";
+import { uploadImage } from "@/utils/image";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Image, Input } from "antd";
 import { useRouter } from "next/navigation";

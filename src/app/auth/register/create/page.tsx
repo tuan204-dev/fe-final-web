@@ -2,8 +2,8 @@
 "use client";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { ALLOWED_FILE_TYPES, ErrorMessages } from "@/constants/common";
-import { uploadImage } from "@/firebase/func";
 import UserServices, { RegisterParams } from "@/services/userServices";
+import { uploadImage } from "@/utils/image";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input } from "antd";
 import { isUndefined, omit, omitBy } from "lodash";
