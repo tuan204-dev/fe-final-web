@@ -1,6 +1,6 @@
 import { MdOutlineLogout } from "react-icons/md";
 import { useAppSelector } from "@/redux/store";
-import { Button, Checkbox, Dropdown } from "antd";
+import { Button, Checkbox, Dropdown, Image } from "antd";
 import React, { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
@@ -8,7 +8,6 @@ import AuthServices from "@/services/authServices";
 import { useDispatch } from "react-redux";
 import { setViewAdvanced } from "@/redux/slices/viewSlice";
 import Link from "next/link";
-import Image from "next/image";
 
 const Header = () => {
   const router = useRouter();
@@ -73,6 +72,8 @@ const Header = () => {
               src={currentUser?.avatar || "/imgs/default-avt.jpg"}
               alt="Profile"
               className="w-10 h-10 rounded-full object-cover"
+              preview={false}
+              fallback="/imgs/default-avt.jpg"
             />
             <div>
               <p className="text-sm font-medium text-gray-800">{fullName}</p>
