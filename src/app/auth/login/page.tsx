@@ -72,6 +72,10 @@ const LoginPage = () => {
         <span>Tài khoản để test:</span>
         <span>admin</span>
         <span>12345678</span>
+
+        <a href="https://ltw-final-fe.netlify.app/" target="_blank" className="text-blue-500 underline">
+          Production web
+        </a>
       </div>
       <h1 className="text-2xl">Photo App</h1>
 
