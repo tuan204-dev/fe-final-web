@@ -3,7 +3,7 @@ import axiosInstance, { axiosNoAuth, BASE_URL } from "./axios";
 import { IUser } from "@/types/user";
 import axios from "axios";
 import { deleteCookie, getCookie } from "cookies-next";
-import { COOKIES_REFRESH_TOKEN } from "@/constants/cookies";
+import { COOKIES_REFRESH_TOKEN, GET_COOKIE_OPTIONS } from "@/constants/cookies";
 
 interface IRefreshTokenResponse {
     accessToken: string;
@@ -40,7 +40,7 @@ const login = async (params: ILoginReq) => {
 }
 
 const logout = async () => {
-    const refreshToken = await getCookie(COOKIES_REFRESH_TOKEN)
+    const refreshToken = await getCookie(COOKIES_REFRESH_TOKEN, GET_COOKIE_OPTIONS)
 
     await axios.post(BASE_URL + '/auth/logout', {
         refreshToken

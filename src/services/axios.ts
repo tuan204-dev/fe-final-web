@@ -1,15 +1,15 @@
-import { COOKIES_ACCESS_TOKEN, COOKIES_OPTIONS, COOKIES_REFRESH_TOKEN } from "@/constants/cookies";
+import { COOKIES_ACCESS_TOKEN, COOKIES_OPTIONS, COOKIES_REFRESH_TOKEN, GET_COOKIE_OPTIONS } from "@/constants/cookies";
 import axios from "axios";
 import { getCookie, setCookie } from "cookies-next";
 import { jwtDecode } from "jwt-decode";
 import AuthServices from "./authServices";
 
-// export const BASE_URL = 'http://localhost:8001';
-export const BASE_URL = 'https://expressjs-e9f3.onrender.com';
+export const BASE_URL = 'http://localhost:8001';
+// export const BASE_URL = 'https://expressjs-e9f3.onrender.com';
 
 const getAccessToken = async () => {
     try {
-        const accessToken = await getCookie(COOKIES_ACCESS_TOKEN)
+        const accessToken = await getCookie(COOKIES_ACCESS_TOKEN, GET_COOKIE_OPTIONS)
 
 
         if (!accessToken) {
@@ -21,7 +21,7 @@ const getAccessToken = async () => {
         const currentTime = Math.floor(Date.now() / 1000)
 
         if (exp < currentTime) {
-            const refreshToken = await getCookie(COOKIES_REFRESH_TOKEN) as string
+            const refreshToken = await getCookie(COOKIES_REFRESH_TOKEN, GET_COOKIE_OPTIONS) as string
 
             if (!refreshToken) {
                 return null

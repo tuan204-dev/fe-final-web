@@ -3,6 +3,7 @@ import {
   COOKIES_ACCESS_TOKEN,
   COOKIES_OPTIONS,
   COOKIES_REFRESH_TOKEN,
+  GET_COOKIE_OPTIONS,
 } from "@/constants/cookies";
 import { updateUser } from "@/redux/slices/authSlice";
 import AuthServices from "@/services/authServices";
@@ -14,7 +15,7 @@ import { useDispatch } from "react-redux";
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
-  const refreshToken = getCookie(COOKIES_REFRESH_TOKEN) as string;
+  const refreshToken = getCookie(COOKIES_REFRESH_TOKEN, GET_COOKIE_OPTIONS) as string;
 
   useEffect(() => {
     (async () => {

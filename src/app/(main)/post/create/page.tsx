@@ -123,7 +123,7 @@ const CreatePost = () => {
               className={cn("size-28 rounded-2xl border border-gray-400", {
                 "border-red-500": errors.imageUrl,
               })}
-              fallback="https://archive.org/download/placeholder-image//placeholder-image.jpg"
+              fallback="/imgs/placeholder-image.jpg"
               src={formValues.imageUrl}
               preview={!!formValues.imageUrl}
               alt=""

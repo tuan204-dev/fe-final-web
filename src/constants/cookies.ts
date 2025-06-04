@@ -4,8 +4,13 @@ export const COOKIES_ACCESS_TOKEN = 'final_web_access_token';
 export const COOKIES_REFRESH_TOKEN = 'final_web_refresh_token';
 
 export const COOKIES_OPTIONS: OptionsType = {
-    maxAge: 60 * 60 * 24 * 7, // 7 days
-    path: "/",
-    sameSite: "none",
+    domain: '.codesandbox.io',
     secure: true,
+    path: '/',
+}
+
+export const GET_COOKIE_OPTIONS: OptionsType = {
+    domain: '.codesandbox.io',
+    secure: true,
+    path: '/',
 }
