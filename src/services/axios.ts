@@ -4,8 +4,8 @@ import { getCookie, setCookie } from "cookies-next";
 import { jwtDecode } from "jwt-decode";
 import AuthServices from "./authServices";
 
-export const BASE_URL = 'http://localhost:8001';
-// export const BASE_URL = 'https://expressjs-e9f3.onrender.com';
+// export const BASE_URL = 'http://localhost:8001';
+export const BASE_URL = 'https://expressjs-e9f3.onrender.com';
 
 const getAccessToken = async () => {
     try {
