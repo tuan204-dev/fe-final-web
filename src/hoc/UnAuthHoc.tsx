@@ -13,7 +13,7 @@ const UnAuthHoc = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   //   const [localRefreshToken] = useLocalStorage(COOKIES_REFRESH_TOKEN, "");
 
-  const localRefreshToken = localStorage.getItem(
+  const localRefreshToken = window.localStorage.getItem(
     COOKIES_REFRESH_TOKEN
   ) as string;
 

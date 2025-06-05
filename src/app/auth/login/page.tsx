@@ -1,7 +1,7 @@
 "use client";
 import {
-    COOKIES_ACCESS_TOKEN,
-    COOKIES_REFRESH_TOKEN
+  COOKIES_ACCESS_TOKEN,
+  COOKIES_REFRESH_TOKEN,
 } from "@/constants/cookies";
 import { updateUser } from "@/redux/slices/authSlice";
 import AuthServices from "@/services/authServices";
@@ -58,8 +58,8 @@ const LoginPage = () => {
       //   setLocalAccessToken(accessToken);
       //   setLocalRefreshToken(refreshToken);
 
-      localStorage.setItem(COOKIES_ACCESS_TOKEN, accessToken);
-      localStorage.setItem(COOKIES_REFRESH_TOKEN, refreshToken);
+      window.localStorage.setItem(COOKIES_ACCESS_TOKEN, accessToken);
+      window.localStorage.setItem(COOKIES_REFRESH_TOKEN, refreshToken);
 
       toast.success("Login successful!");
       router.push("/");

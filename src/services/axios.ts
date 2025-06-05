@@ -10,7 +10,7 @@ export const BASE_URL = 'http://localhost:8001';
 const getAccessToken = async () => {
     try {
         // const accessToken = await getCookie(COOKIES_ACCESS_TOKEN, GET_COOKIE_OPTIONS)
-        const accessToken = localStorage.getItem(COOKIES_ACCESS_TOKEN) as string;
+        const accessToken = window.localStorage.getItem(COOKIES_ACCESS_TOKEN) as string;
 
 
         if (!accessToken) {
@@ -23,7 +23,7 @@ const getAccessToken = async () => {
 
         if (exp < currentTime) {
             // const refreshToken = await getCookie(COOKIES_REFRESH_TOKEN, GET_COOKIE_OPTIONS) as string
-            const refreshToken = localStorage.getItem(COOKIES_REFRESH_TOKEN) as string;
+            const refreshToken = window.localStorage.getItem(COOKIES_REFRESH_TOKEN) as string;
 
             if (!refreshToken) {
                 return null
@@ -34,8 +34,8 @@ const getAccessToken = async () => {
             // setCookie(COOKIES_ACCESS_TOKEN, newTokens.accessToken, COOKIES_OPTIONS)
             // setCookie(COOKIES_REFRESH_TOKEN, newTokens.refreshToken, COOKIES_OPTIONS)
 
-            localStorage.setItem(COOKIES_ACCESS_TOKEN, newTokens.accessToken)
-            localStorage.setItem(COOKIES_REFRESH_TOKEN, newTokens.refreshToken)
+            window.localStorage.setItem(COOKIES_ACCESS_TOKEN, newTokens.accessToken)
+            window.localStorage.setItem(COOKIES_REFRESH_TOKEN, newTokens.refreshToken)
 
             return newTokens.accessToken
         }

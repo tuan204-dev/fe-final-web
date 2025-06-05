@@ -42,7 +42,7 @@ const login = async (params: ILoginReq) => {
 const logout = async () => {
     // const refreshToken = await getCookie(COOKIES_REFRESH_TOKEN, GET_COOKIE_OPTIONS)
 
-    const refreshToken = localStorage.getItem(COOKIES_REFRESH_TOKEN);
+    const refreshToken = window.localStorage.getItem(COOKIES_REFRESH_TOKEN);
 
     await axios.post(BASE_URL + '/auth/logout', {
         refreshToken
@@ -51,8 +51,8 @@ const logout = async () => {
     // deleteCookie(COOKIES_REFRESH_TOKEN);
     // deleteCookie(COOKIES_REFRESH_TOKEN);
 
-    localStorage.removeItem(COOKIES_REFRESH_TOKEN);
-    localStorage.removeItem(COOKIES_REFRESH_TOKEN);
+    window.localStorage.removeItem(COOKIES_REFRESH_TOKEN);
+    window.localStorage.removeItem(COOKIES_REFRESH_TOKEN);
 }
 
 const sendRegisterMail = async (email: string) => {
