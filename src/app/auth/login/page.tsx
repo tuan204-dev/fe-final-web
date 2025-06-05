@@ -1,17 +1,14 @@
 "use client";
 import {
-  COOKIES_ACCESS_TOKEN,
-  COOKIES_OPTIONS,
-  COOKIES_REFRESH_TOKEN,
+    COOKIES_ACCESS_TOKEN,
+    COOKIES_REFRESH_TOKEN
 } from "@/constants/cookies";
 import { updateUser } from "@/redux/slices/authSlice";
 import AuthServices from "@/services/authServices";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input } from "antd";
-import { setCookie } from "cookies-next";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
@@ -56,8 +53,13 @@ const LoginPage = () => {
 
       dispatch(updateUser(user));
 
-      setCookie(COOKIES_ACCESS_TOKEN, accessToken, COOKIES_OPTIONS);
-      setCookie(COOKIES_REFRESH_TOKEN, refreshToken, COOKIES_OPTIONS);
+      //   setCookie(COOKIES_ACCESS_TOKEN, accessToken, COOKIES_OPTIONS);
+      //   setCookie(COOKIES_REFRESH_TOKEN, refreshToken, COOKIES_OPTIONS);
+      //   setLocalAccessToken(accessToken);
+      //   setLocalRefreshToken(refreshToken);
+
+      localStorage.setItem(COOKIES_ACCESS_TOKEN, accessToken);
+      localStorage.setItem(COOKIES_REFRESH_TOKEN, refreshToken);
 
       toast.success("Login successful!");
       router.push("/");
